@@ -6,16 +6,17 @@ not a subprocess)
 import os
 from os.path import *
 
+from io import FileIO
 import tempfile
 import shutil
 
-class TempFile(file):
+class TempFile(FileIO):
     def __init__(self, prefix='tmp', suffix=''):
         fd, path = tempfile.mkstemp(suffix, prefix)
         os.close(fd)
         self.path = path
         self.pid = os.getpid()
-        file.__init__(self, path, "w")
+        super().__init__(self, path, "w")
 
     def __del__(self):
         # sanity check in case we use fork somewhere
