@@ -10,6 +10,7 @@ from io import FileIO
 import tempfile
 import shutil
 
+
 class TempFile(FileIO):
     def __init__(self, prefix='tmp', suffix=''):
         fd, path = tempfile.mkstemp(suffix, prefix)
@@ -22,6 +23,7 @@ class TempFile(FileIO):
         # sanity check in case we use fork somewhere
         if self.pid == os.getpid():
             os.remove(self.path)
+
 
 class TempDir(str):
     def __new__(cls, prefix='tmp', suffix='', dir=None):
